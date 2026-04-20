@@ -18,6 +18,7 @@ def _load(name: str) -> str:
 
 # ── Parsing ──────────────────────────────────────────────────────────────────
 
+
 def test_parse_podlist() -> None:
     pods = parse_pods(_load("healthy.json"))
     assert len(pods) == 2
@@ -75,6 +76,7 @@ def test_parse_owner_references() -> None:
 
 
 # ── managedFields exclusion ──────────────────────────────────────────────────
+
 
 def test_managed_fields_excluded() -> None:
     """managedFields must never appear in parsed models (it's massively bloated)."""

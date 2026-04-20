@@ -121,7 +121,9 @@ def parse_pods(json_str: str) -> list[Pod]:
     elif kind == "Pod" or (not kind and "metadata" in data):
         return [Pod.model_validate(data)]
     else:
-        raise ValueError(f"Unrecognized kubectl output kind: '{kind}'. Expected 'PodList' or 'Pod'.")
+        raise ValueError(
+            f"Unrecognized kubectl output kind: '{kind}'. Expected 'PodList' or 'Pod'."
+        )
 
 
 def sanitize_for_ai(pods: list[Pod]) -> list[dict[str, Any]]:

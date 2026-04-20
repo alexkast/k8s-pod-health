@@ -22,6 +22,7 @@ def _issues(fixture: str) -> list[str]:
 
 # ── Issue detection ───────────────────────────────────────────────────────────
 
+
 def test_crashloop_detected() -> None:
     pods = parse_pods(_load("crashloop.json"))
     report = analyze_pod(pods[0])
@@ -53,7 +54,9 @@ def test_high_restart_count_warning() -> None:
     pods = parse_pods(_load("crashloop.json"))
     report = analyze_pod(pods[0])
     # restart count is 12 — should produce a warning
-    warnings = [i for i in report.issues if i.severity == "warning" and "restart" in i.message.lower()]
+    warnings = [
+        i for i in report.issues if i.severity == "warning" and "restart" in i.message.lower()
+    ]
     assert warnings, "Expected high restart count warning"
 
 
@@ -95,6 +98,7 @@ def test_mixed_correct_counts() -> None:
 
 # ── Controller name resolution ────────────────────────────────────────────────
 
+
 def test_resolve_replicaset_hash_stripped() -> None:
     ref = OwnerReference(kind="ReplicaSet", name="nginx-deployment-5c689d88b")
     assert resolve_controller_name(ref) == "nginx-deployment"
@@ -123,6 +127,7 @@ def test_resolve_two_rs_same_deployment() -> None:
 
 
 # ── Aggregation ───────────────────────────────────────────────────────────────
+
 
 def test_aggregation_groups_10_pods() -> None:
     """10 pods from same Deployment/RS with CrashLoopBackOff → single AggregatedIssue."""

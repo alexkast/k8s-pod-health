@@ -35,7 +35,9 @@ def get_ai_analysis(report: HealthReport, model: str = "haiku") -> str:
 
     # Only send unhealthy pods
     unhealthy_pods = [
-        p for p in report.pod_reports if any(i.severity in ("critical", "warning") for i in p.issues)
+        p
+        for p in report.pod_reports
+        if any(i.severity in ("critical", "warning") for i in p.issues)
     ]
     if not unhealthy_pods:
         return ""
@@ -69,7 +71,9 @@ def _build_payload(report: HealthReport, unhealthy_pods: Any) -> dict[str, Any]:
     """Build a compact, sanitized payload for the LLM."""
     aggregated = [
         {
-            "controller": f"{a.controller_kind}/{a.controller_name}" if a.controller_kind else "standalone",
+            "controller": f"{a.controller_kind}/{a.controller_name}"
+            if a.controller_kind
+            else "standalone",
             "namespace": a.namespace,
             "affectedPods": a.count,
             "severity": a.severity,
