@@ -11,7 +11,7 @@ import typer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
-from pod_health.analyzer import analyze_all
+from pod_health.analyzer import HealthReport, analyze_all
 from pod_health.parser import parse_pods
 from pod_health.renderer import render_error, render_report, render_warning
 
@@ -89,7 +89,7 @@ def _read_input(file: Optional[Path]) -> Optional[str]:
     raise typer.Exit(1)
 
 
-def _run_ai(report: "analyze_all.__class__", model: str) -> str:  # type: ignore[valid-type]
+def _run_ai(report: HealthReport, model: str) -> str:
     """Run AI analysis with spinner. Returns analysis text or empty string on error."""
     from pod_health.ai_advisor import get_ai_analysis
 
@@ -101,21 +101,19 @@ def _run_ai(report: "analyze_all.__class__", model: str) -> str:  # type: ignore
     ) as progress:
         progress.add_task(description="Asking Claude for analysis...", total=None)
         try:
-            return get_ai_analysis(report, model=model)  # type: ignore[arg-type]
+            return get_ai_analysis(report, model=model)
         except RuntimeError as e:
             render_warning(f"AI analysis skipped: {e}")
             return ""
 
 
-def _print_json(report: "analyze_all.__class__") -> None:  # type: ignore[valid-type]
-
-    r = report  # type: ignore[assignment]
+def _print_json(report: HealthReport) -> None:
     data = {
         "summary": {
-            "total": r.total,
-            "healthy": r.healthy,
-            "warning": r.warning,
-            "critical": r.critical,
+            "total": report.total,
+            "healthy": report.healthy,
+            "warning": report.warning,
+            "critical": report.critical,
         },
         "pods": [
             {
@@ -128,7 +126,7 @@ def _print_json(report: "analyze_all.__class__") -> None:  # type: ignore[valid-
                     for i in p.issues
                 ],
             }
-            for p in r.pod_reports
+            for p in report.pod_reports
         ],
     }
     console.print_json(json.dumps(data))
