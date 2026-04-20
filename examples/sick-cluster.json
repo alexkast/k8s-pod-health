@@ -1,0 +1,200 @@
+{
+  "apiVersion": "v1",
+  "kind": "PodList",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "nginx-deployment-5c689d88b-abc01",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T06:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "nginx-deployment-5c689d88b"}],
+        "annotations": {"kubectl.kubernetes.io/last-applied-configuration": "...sensitive..."}
+      },
+      "spec": {
+        "containers": [{"name": "nginx", "image": "nginx:1.25", "resources": {"limits": {"cpu": "500m", "memory": "256Mi"}, "requests": {"cpu": "100m", "memory": "128Mi"}}, "env": [{"name": "SECRET", "value": "s3cr3t!"}]}]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [{"name": "nginx", "image": "nginx:1.25", "ready": true, "restartCount": 0, "state": {"running": {}}, "lastState": {}}]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "nginx-deployment-5c689d88b-abc02",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T06:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "nginx-deployment-5c689d88b"}]
+      },
+      "spec": {"containers": [{"name": "nginx", "image": "nginx:1.25", "resources": {"limits": {"cpu": "500m", "memory": "256Mi"}, "requests": {"cpu": "100m", "memory": "128Mi"}}}]},
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [{"name": "nginx", "image": "nginx:1.25", "ready": true, "restartCount": 0, "state": {"running": {}}, "lastState": {}}]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "api-deployment-7f4d92a1c-crash1",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T08:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "api-deployment-7f4d92a1c"}]
+      },
+      "spec": {"containers": [{"name": "api", "image": "myapp/api:v2.1", "resources": {"limits": {"cpu": "1", "memory": "512Mi"}, "requests": {"cpu": "200m", "memory": "256Mi"}}}]},
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "False", "reason": "ContainersNotReady"}],
+        "containerStatuses": [
+          {
+            "name": "api",
+            "image": "myapp/api:v2.1",
+            "ready": false,
+            "restartCount": 17,
+            "state": {"waiting": {"reason": "CrashLoopBackOff", "message": "back-off 5m0s restarting failed container"}},
+            "lastState": {"terminated": {"reason": "Error", "exitCode": 1, "finishedAt": "2024-04-15T09:55:00Z"}}
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "api-deployment-7f4d92a1c-crash2",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T08:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "api-deployment-7f4d92a1c"}]
+      },
+      "spec": {"containers": [{"name": "api", "image": "myapp/api:v2.1", "resources": {"limits": {"cpu": "1", "memory": "512Mi"}, "requests": {"cpu": "200m", "memory": "256Mi"}}}]},
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "False"}],
+        "containerStatuses": [
+          {
+            "name": "api",
+            "image": "myapp/api:v2.1",
+            "ready": false,
+            "restartCount": 14,
+            "state": {"waiting": {"reason": "CrashLoopBackOff"}},
+            "lastState": {"terminated": {"reason": "Error", "exitCode": 1}}
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "api-deployment-7f4d92a1c-crash3",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T08:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "api-deployment-7f4d92a1c"}]
+      },
+      "spec": {"containers": [{"name": "api", "image": "myapp/api:v2.1", "resources": {"limits": {"cpu": "1", "memory": "512Mi"}, "requests": {"cpu": "200m", "memory": "256Mi"}}}]},
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "False"}],
+        "containerStatuses": [
+          {
+            "name": "api",
+            "image": "myapp/api:v2.1",
+            "ready": false,
+            "restartCount": 19,
+            "state": {"waiting": {"reason": "CrashLoopBackOff"}},
+            "lastState": {"terminated": {"reason": "Error", "exitCode": 1}}
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "worker-deployment-d9e3f7a2b-oom01",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T07:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "worker-deployment-d9e3f7a2b"}]
+      },
+      "spec": {"containers": [{"name": "worker", "image": "myapp/worker:1.0", "resources": {"limits": {"memory": "128Mi"}, "requests": {"memory": "64Mi"}}}]},
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [
+          {
+            "name": "worker",
+            "image": "myapp/worker:1.0",
+            "ready": true,
+            "restartCount": 5,
+            "state": {"running": {"startedAt": "2024-04-15T09:30:00Z"}},
+            "lastState": {"terminated": {"reason": "OOMKilled", "exitCode": 137, "finishedAt": "2024-04-15T09:29:55Z"}}
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "frontend-deploy-abc12345b-imgpull",
+        "namespace": "staging",
+        "creationTimestamp": "2024-04-15T10:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "frontend-deploy-abc12345b"}]
+      },
+      "spec": {"containers": [{"name": "frontend", "image": "myapp/frontend:v3.0-rc1-typo", "resources": {"limits": {"cpu": "500m", "memory": "256Mi"}, "requests": {"cpu": "100m", "memory": "128Mi"}}}]},
+      "status": {
+        "phase": "Pending",
+        "conditions": [{"type": "Ready", "status": "False"}],
+        "containerStatuses": [
+          {
+            "name": "frontend",
+            "image": "myapp/frontend:v3.0-rc1-typo",
+            "ready": false,
+            "restartCount": 0,
+            "state": {"waiting": {"reason": "ImagePullBackOff", "message": "Back-off pulling image"}},
+            "lastState": {}
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "nolimits-deploy-deadbeef1-nolimit",
+        "namespace": "staging",
+        "creationTimestamp": "2024-04-15T09:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "nolimits-deploy-deadbeef1"}]
+      },
+      "spec": {"containers": [{"name": "app", "image": "myapp/app:latest", "resources": {}}]},
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [
+          {"name": "app", "image": "myapp/app:latest", "ready": true, "restartCount": 0, "state": {"running": {}}, "lastState": {}}
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "db-migrate-job-1713180000-abc",
+        "namespace": "production",
+        "creationTimestamp": "2024-04-15T11:00:00Z",
+        "ownerReferences": [{"apiVersion": "batch/v1", "kind": "Job", "name": "db-migrate-job-1713180000"}]
+      },
+      "spec": {"containers": [{"name": "migrate", "image": "myapp/migrate:v2.1", "resources": {"limits": {"cpu": "200m", "memory": "128Mi"}, "requests": {"cpu": "50m", "memory": "64Mi"}}}]},
+      "status": {
+        "phase": "Pending",
+        "conditions": [{"type": "PodScheduled", "status": "False", "reason": "Unschedulable", "message": "0/3 nodes available: insufficient memory"}],
+        "containerStatuses": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+[project]
+name = "pod-health"
+version = "0.1.0"
+description = "K8s Pod Health Analyzer — AI-powered kubectl pod diagnostics"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.96.0",
+    "pydantic>=2.13.2",
+    "rich>=15.0.0",
+    "typer>=0.24.1",
+]
+
+[project.scripts]
+pod-health = "pod_health.cli:app"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.20.1",
+    "pytest>=9.0.3",
+    "ruff>=0.15.11",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

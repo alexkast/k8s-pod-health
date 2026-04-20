@@ -1,0 +1,43 @@
+{
+  "apiVersion": "v1",
+  "kind": "PodList",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "frontend-deployment-abc12345-xyz99",
+        "namespace": "staging",
+        "creationTimestamp": "2024-04-15T11:00:00Z",
+        "ownerReferences": [
+          {"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "frontend-deployment-abc12345"}
+        ]
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "frontend",
+            "image": "myapp/frontend:v2.0-typo",
+            "resources": {"limits": {"cpu": "200m", "memory": "128Mi"}, "requests": {"cpu": "50m", "memory": "64Mi"}}
+          }
+        ]
+      },
+      "status": {
+        "phase": "Pending",
+        "conditions": [{"type": "Ready", "status": "False", "reason": "ContainersNotReady"}],
+        "containerStatuses": [
+          {
+            "name": "frontend",
+            "image": "myapp/frontend:v2.0-typo",
+            "ready": false,
+            "restartCount": 0,
+            "state": {
+              "waiting": {"reason": "ImagePullBackOff", "message": "Back-off pulling image \"myapp/frontend:v2.0-typo\""}
+            },
+            "lastState": {}
+          }
+        ]
+      }
+    }
+  ]
+}

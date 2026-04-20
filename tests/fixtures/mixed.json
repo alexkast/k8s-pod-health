@@ -1,0 +1,73 @@
+{
+  "apiVersion": "v1",
+  "kind": "PodList",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "web-deployment-aabbccdd1-pod01",
+        "namespace": "default",
+        "creationTimestamp": "2024-04-15T08:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "web-deployment-aabbccdd1"}]
+      },
+      "spec": {
+        "containers": [{"name": "web", "image": "nginx:1.25", "resources": {"limits": {"cpu": "200m", "memory": "128Mi"}, "requests": {"cpu": "50m", "memory": "64Mi"}}}]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [
+          {"name": "web", "image": "nginx:1.25", "ready": true, "restartCount": 0, "state": {"running": {}}, "lastState": {}}
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "web-deployment-aabbccdd1-pod02",
+        "namespace": "default",
+        "creationTimestamp": "2024-04-15T08:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "web-deployment-aabbccdd1"}]
+      },
+      "spec": {
+        "containers": [{"name": "web", "image": "nginx:1.25", "resources": {"limits": {"cpu": "200m", "memory": "128Mi"}, "requests": {"cpu": "50m", "memory": "64Mi"}}}]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [
+          {"name": "web", "image": "nginx:1.25", "ready": true, "restartCount": 0, "state": {"running": {}}, "lastState": {}}
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "broken-deployment-99887766a-pod01",
+        "namespace": "default",
+        "creationTimestamp": "2024-04-15T09:00:00Z",
+        "ownerReferences": [{"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "broken-deployment-99887766a"}]
+      },
+      "spec": {
+        "containers": [{"name": "app", "image": "myapp:bad", "resources": {}}]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "False"}],
+        "containerStatuses": [
+          {
+            "name": "app",
+            "image": "myapp:bad",
+            "ready": false,
+            "restartCount": 8,
+            "state": {"waiting": {"reason": "CrashLoopBackOff"}},
+            "lastState": {"terminated": {"reason": "Error", "exitCode": 1}}
+          }
+        ]
+      }
+    }
+  ]
+}

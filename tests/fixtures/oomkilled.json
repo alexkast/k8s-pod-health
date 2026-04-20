@@ -1,0 +1,47 @@
+{
+  "apiVersion": "v1",
+  "kind": "PodList",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "worker-deployment-d9e3f7a2b-oom01",
+        "namespace": "default",
+        "creationTimestamp": "2024-04-15T08:00:00Z",
+        "ownerReferences": [
+          {"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "worker-deployment-d9e3f7a2b"}
+        ]
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "worker",
+            "image": "myapp/worker:1.0",
+            "resources": {"limits": {"memory": "64Mi"}, "requests": {"memory": "32Mi"}}
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [
+          {
+            "name": "worker",
+            "image": "myapp/worker:1.0",
+            "ready": true,
+            "restartCount": 3,
+            "state": {"running": {"startedAt": "2024-04-15T10:30:00Z"}},
+            "lastState": {
+              "terminated": {
+                "reason": "OOMKilled",
+                "exitCode": 137,
+                "finishedAt": "2024-04-15T10:29:55Z"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

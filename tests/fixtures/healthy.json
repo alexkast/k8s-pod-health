@@ -1,0 +1,84 @@
+{
+  "apiVersion": "v1",
+  "kind": "PodList",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "nginx-deployment-5c689d88b-xk2jt",
+        "namespace": "default",
+        "creationTimestamp": "2024-04-15T10:00:00Z",
+        "ownerReferences": [
+          {"apiVersion": "apps/v1", "kind": "ReplicaSet", "name": "nginx-deployment-5c689d88b"}
+        ],
+        "annotations": {"kubectl.kubernetes.io/last-applied-configuration": "secret-stuff"},
+        "managedFields": [{"manager": "kubectl", "operation": "Apply"}]
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "nginx",
+            "image": "nginx:1.25",
+            "resources": {"limits": {"cpu": "500m", "memory": "128Mi"}, "requests": {"cpu": "100m", "memory": "64Mi"}},
+            "env": [{"name": "SECRET_KEY", "value": "supersecret123"}],
+            "volumeMounts": [{"name": "config", "mountPath": "/etc/nginx"}]
+          }
+        ],
+        "volumes": [{"name": "config", "configMap": {"name": "nginx-config"}}]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {"type": "Ready", "status": "True"},
+          {"type": "ContainersReady", "status": "True"}
+        ],
+        "containerStatuses": [
+          {
+            "name": "nginx",
+            "image": "nginx:1.25",
+            "ready": true,
+            "restartCount": 0,
+            "state": {"running": {"startedAt": "2024-04-15T10:01:00Z"}},
+            "lastState": {}
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "name": "redis-statefulset-0",
+        "namespace": "default",
+        "creationTimestamp": "2024-04-15T09:00:00Z",
+        "ownerReferences": [
+          {"apiVersion": "apps/v1", "kind": "StatefulSet", "name": "redis-statefulset"}
+        ]
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "redis",
+            "image": "redis:7.2",
+            "resources": {"limits": {"cpu": "1", "memory": "512Mi"}, "requests": {"cpu": "200m", "memory": "256Mi"}}
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [{"type": "Ready", "status": "True"}],
+        "containerStatuses": [
+          {
+            "name": "redis",
+            "image": "redis:7.2",
+            "ready": true,
+            "restartCount": 0,
+            "state": {"running": {"startedAt": "2024-04-15T09:01:00Z"}},
+            "lastState": {}
+          }
+        ]
+      }
+    }
+  ]
+}
