@@ -18,8 +18,9 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: "fs,config"
+          scan-type: "fs"
           scan-ref: "."
+          scanners: "vuln,config"
           format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH"
