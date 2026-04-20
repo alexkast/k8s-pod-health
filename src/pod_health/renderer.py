@@ -50,7 +50,11 @@ def _render_summary(report: HealthReport) -> None:
     else:
         title_color = "green"
     console.print(
-        Panel(summary_text, title=f"[{title_color}]K8s Pod Health Report[/{title_color}]", expand=False)
+        Panel(
+            summary_text,
+            title=f"[{title_color}]K8s Pod Health Report[/{title_color}]",
+            expand=False,
+        )
     )
     console.print()
 
@@ -95,7 +99,9 @@ def _render_aggregated_issues(report: HealthReport) -> None:
     lines: list[str] = []
     for agg in report.aggregated_issues:
         color = _SEVERITY_COLOR.get(agg.severity, "white")
-        ctrl = f"{agg.controller_kind}/{agg.controller_name}" if agg.controller_kind else "standalone"
+        ctrl = (
+            f"{agg.controller_kind}/{agg.controller_name}" if agg.controller_kind else "standalone"
+        )
         count_str = f"{agg.count} pod{'s' if agg.count != 1 else ''}"
         lines.append(
             f"[{color}][{agg.severity.upper()}][/{color}] {ctrl} ({agg.namespace}): "

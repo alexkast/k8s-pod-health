@@ -213,9 +213,7 @@ def analyze_all(pods: list[Pod]) -> HealthReport:
     """Analyze all pods, return aggregated health report."""
     reports = [analyze_pod(p) for p in pods]
 
-    critical_count = sum(
-        1 for r in reports if any(i.severity == "critical" for i in r.issues)
-    )
+    critical_count = sum(1 for r in reports if any(i.severity == "critical" for i in r.issues))
     warning_count = sum(
         1
         for r in reports

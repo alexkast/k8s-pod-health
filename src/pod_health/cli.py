@@ -21,11 +21,15 @@ console = Console()
 
 @app.command()
 def main(
-    file: Optional[Path] = typer.Option(None, "--file", "-f", help="Path to kubectl JSON output file."),
+    file: Optional[Path] = typer.Option(
+        None, "--file", "-f", help="Path to kubectl JSON output file."
+    ),
     no_ai: bool = typer.Option(False, "--no-ai", help="Skip AI analysis (works offline)."),
     model: str = typer.Option("haiku", "--model", help="AI model: 'haiku' (default) or 'sonnet'."),
     namespace: Optional[str] = typer.Option(None, "--namespace", "-n", help="Filter by namespace."),
-    output_json: bool = typer.Option(False, "--json", help="Output raw JSON report instead of rich UI."),
+    output_json: bool = typer.Option(
+        False, "--json", help="Output raw JSON report instead of rich UI."
+    ),
 ) -> None:
     """Analyze kubectl pod health — pipe JSON or specify --file."""
     # Read input
